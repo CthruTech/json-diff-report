@@ -1,5 +1,5 @@
 {
-  "name": "json-diff-report",
+  "name": "@cthru/json-diff-report",
   "version": "0.2.0",
   "description": "JSON Diff report generator",
   "main": "index.js",
