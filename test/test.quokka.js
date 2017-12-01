@@ -46,5 +46,7 @@ const diffSprint = new Diff({
 });
 
 // let out = diffSprint.diff(oObj, nObj);
-let out = diffSprint.diffMessages(oObj, nObj);
-console.log(out)
+let diff = diffSprint.diff(oObj, nObj);
+let report = diffSprint.report(oObj, nObj);
+let messages = diffSprint.messages(oObj, nObj);
+console.log({messages,report,diff});

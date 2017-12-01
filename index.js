@@ -1,6 +1,6 @@
 const Evented = require('@cthru/evented');
 
-class Diff extends Evented {
+class DiffReport extends Evented {
     constructor({ strings = {} }) {
         super();
         this.strings = strings;
@@ -10,7 +10,7 @@ class Diff extends Evented {
         return (obj) => (new Function(`return \`${tplStr.replace(/\$\{(this\.)?/igm, '${this.')}\`;`)).call(obj);
     }
 
-    fullDiff(oldObj, newObj, prefix = '') {
+    diff(oldObj, newObj, prefix = '') {
         let keys = [...Object.keys(oldObj), ...Object.keys(newObj)].filter((v, i, a) => a.indexOf(v) === i)
         let mods = {};
         keys.forEach(key => {
@@ -53,16 +53,15 @@ class Diff extends Evented {
 
                     }
                 } else {
-                    mods = Object.assign(mods, this.fullDiff(valOld, valNew, `${fullAccessor}.`));
+                    mods = Object.assign(mods, this.diff(valOld, valNew, `${fullAccessor}.`));
                 }
             }
         });
         return mods;
     }
 
-    diff(oldObj, newObj) {
-        let diff = this.fullDiff(oldObj, newObj);
-        console.log(diff);
+    report(oldObj, newObj) {
+        let diff = this.diff(oldObj, newObj);
         for (let key in diff) {
             let delta = diff[key];
             delta.match = this.findMatch(delta.key, delta.operation);
@@ -92,8 +91,8 @@ class Diff extends Evented {
         return diff;
     }
 
-    diffMessages(oldObj, newObj) {
-        let diff = this.diff(oldObj, newObj);
+    messages(oldObj, newObj) {
+        let diff = this.report(oldObj, newObj);
         let messages = {};
         for (let prop in diff) {
             if (diff[prop].messages) {
@@ -118,4 +117,6 @@ class Diff extends Evented {
         return matches.length > 0 ? matches[0] : null;
     }
 }
+
+module.exports = DiffReport;
 
