@@ -1,6 +1,6 @@
 {
   "name": "@cthru/json-diff-report",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "JSON Diff report generator",
   "main": "index.js",
   "scripts": {
